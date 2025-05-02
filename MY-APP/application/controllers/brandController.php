@@ -42,8 +42,6 @@ class brandController extends CI_Controller
 	}
 
 
-
-
 	public function index($page = 1)
 	{
 		$this->config->config['pageTitle'] = 'List Brand';
