@@ -259,7 +259,7 @@ class reviewController extends CI_Controller
     {
         $review_id = $this->input->post('review_id', true);
         $comment   = $this->input->post('comment', true);
-        // $reply     = $this->input->post('reply', true);
+        $reply     = $this->input->post('reply', true);
         $is_active = $this->input->post('is_active', true);
         if (empty($review_id)) {
             $this->session->set_flashdata('error', 'ID đánh giá không hợp lệ.');
@@ -270,15 +270,9 @@ class reviewController extends CI_Controller
         // Chuẩn bị mảng dữ liệu cần cập nhật
         $data = [
             'comment' => $comment,
-            
+            'reply'   => $reply,
             'is_active' => $is_active
         ];
-
-        // $data = [
-        //     'comment' => $comment,
-        //     'reply'   => $reply,
-        //     'is_active' => $is_active
-        // ];
         // Gọi model xử lý
         $this->load->model('reviewModel');
         $updated = $this->reviewModel->updateReviewData($review_id, $data);

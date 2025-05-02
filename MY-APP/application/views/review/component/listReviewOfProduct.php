@@ -25,11 +25,11 @@
                                             <textarea name="comment" class="form-control width250" rows="2"
                                                 placeholder="Nhập đánh giá"><?php echo set_value('comment', $review->comment); ?></textarea>
                                         </div>
-                                        <!-- <div class="form-group ml20">
+                                        <div class="form-group ml20">
                                             <label for="reply">Trả lời đánh giá:</label>
                                             <textarea name="reply" class="form-control width250" rows="2"
                                                 placeholder="Trả lời đánh giá"><?php echo set_value('comment', $review->reply); ?></textarea>
-                                        </div> -->
+                                        </div>
                                         <div class="form-group ml20 review-status">
                                             <select name="is_active" class="form-control width200 setupSelect2">
                                                 <option value="1" <?php echo ($review->is_active == 1) ? 'selected' : '' ?>>Đã duyệt</option>

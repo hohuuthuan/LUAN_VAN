@@ -303,19 +303,26 @@ class brandController extends CI_Controller
 		$brand_ids = $this->input->post('brand_ids');
 		$new_status = (int) $this->input->post('new_status');
 
+		// echo '<pre>';
+		// print_r($brand_ids);
+		// echo '</pre>';
+
+		// echo $new_status; die();
+
+
 		if (empty($brand_ids) || !is_array($brand_ids)) {
 			$this->session->set_flashdata('error', 'Cần chọn ít nhất một nhà cung cấp');
 			redirect(base_url('brand/list'));
 			return;
 		}
 
-		if (empty($new_status)) {
+		if (!isset($new_status)) {
 			$this->session->set_flashdata('error', 'Cần chọn trạng thái');
 			redirect(base_url('brand/list'));
 			return;
 		}
 
-		$this->load->model('supplierModel');
+		$this->load->model('brandModel');
 		$this->brandModel->bulkupdateBrand($brand_ids, $new_status);
 		$this->session->set_flashdata('success', 'Cập nhật trạng thái thành công');
 		redirect(base_url('brand/list'));
