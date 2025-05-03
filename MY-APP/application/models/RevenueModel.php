@@ -14,6 +14,8 @@ class revenueModel extends CI_Model
         ";
         $query = $this->db->query($sql);
         return $query->row()->TotalRevenueToday ?? 0;
+
+        
     }
 
     // Tính tổng lợi nhuận của ngày hôm nay
