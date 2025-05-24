@@ -1,13 +1,4 @@
-
-
-
-
-
-<?php if ($this->session->flashdata('success')) { ?>
-    <div class="alert alert-success"><?php echo $this->session->flashdata('success') ?></div>
-<?php } elseif ($this->session->flashdata('error')) { ?>
-    <div class="alert alert-danger"><?php echo $this->session->flashdata('error') ?></div>
-<?php } ?>
+=
 
 <?php $this->load->view('admin-layout/component-admin/breadcrumb'); ?>
 
@@ -40,15 +31,11 @@
                                 <div class="form-row">
                                     <label for="status">Trạng thái</label>
                                     <select name="status" class="form-control setupSelect2">
-                                        <?php
-                                        if ($slider->status == 1) {
-                                            ?>
-                                            <option selected value="1">Active</option>
-                                            <option value="0">Inactive</option>
-                                        <?php } ?>
+                                        <option value="1" <?= ($slider->status == 1) ? 'selected' : '' ?>>Active</option>
+                                        <option value="0" <?= ($slider->status == 0) ? 'selected' : '' ?>>Inactive</option>
                                     </select>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
 
@@ -58,11 +45,9 @@
                                     <div class="form-group">
                                         <label for="image">Hình ảnh</label>
                                         <input name="image" type="file" class="form-control-file">
-                                        <img style="width: 100%; height: 150px;" src="<?php echo base_url('uploads/sliders/' . $slider->image) ?>" alt=""
-                                           >
+                                        <img style="width: 100%; height: 150px;" src="<?php echo base_url('uploads/sliders/' . $slider->image) ?>" alt="">
                                         <small class="text-danger"><?php if (isset($error))
-                                            echo $error ?></small>
-                                        </div>
+                                                                        echo $error ?></small>
                                     </div>
                                 </div>
                             </div>
@@ -70,9 +55,10 @@
                     </div>
                 </div>
             </div>
-            <hr>
-            <div class="text-right mb15">
-                <button type="submit" name="send" value="send" class="btn btn-primary">Lưu lại</button>
-            </div>
         </div>
-    </form>
+        <hr>
+        <div class="text-right mb15">
+            <button type="submit" name="send" value="send" class="btn btn-primary">Lưu lại</button>
+        </div>
+    </div>
+</form>

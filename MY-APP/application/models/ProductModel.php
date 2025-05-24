@@ -75,30 +75,6 @@ class productModel extends CI_Model
 
 
 
-    // public function deleteProduct($id)
-    // {
-    //     // Lấy danh sách các order code liên quan đến sản phẩm
-    //     $orders = $this->getOrdersByProductId($id);
-
-    //     if (!empty($orders)) {
-    //         $order_codes = array_column($orders, 'order_code');
-    //         return [
-    //             'status' => false,
-    //             'message' => 'Không thể xóa sản phẩm vì đang được sử dụng trong các đơn hàng: ' . implode(', ', $order_codes)
-    //         ];
-    //     }
-
-    //     // Xóa các bản ghi liên quan trong bảng warehouses
-    //     $this->db->delete('warehouses', ['product_id' => $id]);
-
-    //     // Sau đó, xóa sản phẩm trong bảng product
-    //     $this->db->delete('product', ['id' => $id]);
-
-    //     return ['status' => true, 'message' => 'Đã xóa sản phẩm thành công.'];
-    // }
-
-
-
     public function getProductsByDisease($disease_name)
     {
         // Tìm sản phẩm liên quan đến tên bệnh

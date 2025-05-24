@@ -44,51 +44,6 @@ class productController extends CI_Controller
 	}
 
 
-	// public function index($page = 1)
-	// {
-	// 	$this->config->config['pageTitle'] = 'List Products';
-	// 	$this->load->model('indexModel');
-	// 	$this->load->library('pagination');
-
-	// 	$keyword  = $this->input->get('keyword', true);
-	// 	$status   = $this->input->get('status', true);
-	// 	$sort_stock = $this->input->get('sort_stock', true);
-	// 	$perpage  = (int) $this->input->get('perpage');
-	// 	$perpage  = $perpage > 0 ? $perpage : 10;
-
-	// 	$total_products = $this->indexModel->countAllProduct($keyword, $status);
-
-	// 	$page  = (int)$page;
-	// 	$page  = ($page > 0) ? $page : 1;
-	// 	$max_page = ceil($total_products / $perpage);
-	// 	if ($page > $max_page && $total_products > 0) {
-	// 		$query = http_build_query($this->input->get());
-	// 		redirect(base_url('product/list') . ($query ? '?' . $query : ''));
-	// 	}
-
-	// 	$start = ($page - 1) * $perpage;
-
-
-	// 	$data['products'] = $this->indexModel->getProductPagination($perpage, $start, $keyword, $status);
-	// 	// echo '<pre>';
-	// 	// print_r($data['products']);
-	// 	// echo '</pre>';
-	// 	$data['links'] = init_pagination(base_url('product/list'), $total_products, $perpage, 3);
-
-	// 	$data['keyword'] = $keyword;
-	// 	$data['status'] = $status;
-	// 	$data['perpage'] = $perpage;
-	// 	$data['title'] = "Danh sách sản phẩm";
-	// 	$data['breadcrumb'] = [
-	// 		['label' => 'Dashboard', 'url' => 'dashboard'],
-	// 		['label' => 'Danh sách sản phẩm']
-	// 	];
-	// 	$data['start'] = $start;
-	// 	$data['template'] = "product/index";
-	// 	$this->load->view("admin-layout/admin-layout", $data);
-	// }
-
-
 	public function index($page = 1)
 	{
 		$this->config->config['pageTitle'] = 'List Products';
@@ -221,17 +176,6 @@ class productController extends CI_Controller
 		}
 	}
 
-	// private function loadProductForm($data = [])
-	// {
-	// 	$this->load->model('brandModel');
-	// 	$this->load->model('categoryModel');
-	// 	$data['brand'] = $this->brandModel->getAllBrands();
-	// 	$data['category'] = $this->categoryModel->getAllCategories();
-	// 	$data['template'] = "product/storeProduct";
-	// 	$data['title'] = "Thêm mới sản phẩm";
-	// 	$this->load->view("admin-layout/admin-layout", $data);
-	// }
-
 
 	public function editProduct($ProductID)
 	{
@@ -331,9 +275,9 @@ class productController extends CI_Controller
 		$product_ids = $this->input->post('product_ids');
 		$action = $this->input->post('action');
 
-		// echo '<pre>';
-		// print_r($action);
-		// echo '</pre>';
+		echo '<pre>';
+		print_r($product_ids);
+		echo '</pre>';
 
 
 		if (empty($product_ids)) {
@@ -345,12 +289,17 @@ class productController extends CI_Controller
 		$this->load->model('productModel');
 
 		if ($action === 'update_status') {
-			if (empty((int) $this->input->post('new_status'))) {
-				$this->session->set_flashdata('error', 'Cần chọn trạng thái');
+			
+			$new_status = $this->input->post('new_status');
+			// echo $new_status;
+			// die();
+
+			if (!isset($new_status) || $new_status < 0) {
+				// echo 123; die();
+				$this->session->set_flashdata('error', 'Bạn cần chọn trạng thái');
 				redirect(base_url('product/list'));
 				return;
 			}
-			$new_status = (int) $this->input->post('new_status');
 			$this->productModel->bulkUpdateStatus($product_ids, $new_status);
 			$this->session->set_flashdata('success', 'Cập nhật trạng thái thành công');
 		} elseif ($action === 'update_promotion') {
@@ -370,38 +319,6 @@ class productController extends CI_Controller
 
 		redirect(base_url('product/list'));
 	}
-
-
-
-
-
-	// public function bulkUpdateProduct()
-	// {
-
-	// 	$product_ids = $this->input->post('product_ids');
-	// 	$new_status = (int) $this->input->post('new_status');
-
-
-
-	// 	$this->load->model('productModel');
-	// 	$this->productModel->bulkUpdateProduct($product_ids, $new_status);
-	// }
-
-
-
-	// public function deleteProduct($id)
-	// {
-	// 	$this->load->model('productModel');
-	// 	$result = $this->productModel->deleteProduct($id);
-
-	// 	if ($result['status']) {
-	// 		$this->session->set_flashdata('success', $result['message']);
-	// 	} else {
-	// 		$this->session->set_flashdata('error', $result['message']);
-	// 	}
-
-	// 	redirect(base_url('product/list'));
-	// }
 
 
 }

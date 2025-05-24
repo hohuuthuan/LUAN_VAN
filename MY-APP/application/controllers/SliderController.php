@@ -74,7 +74,7 @@ class sliderController extends CI_Controller
 	public function storeSlider()
 	{
 		$this->form_validation->set_rules('title', 'title', 'trim|required', ['required' => 'Bạn cần nhập tên banner']);
-	
+
 
 		if ($this->form_validation->run()) {
 
@@ -112,12 +112,18 @@ class sliderController extends CI_Controller
 	}
 
 
-	
+
 	public function editSlider($id)
 	{
 		$this->config->config['pageTitle'] = 'Update Banner';
 		$this->load->model('sliderModel');
 		$data['slider'] = $this->sliderModel->selectSliderById($id);
+
+		echo '<pre>';
+		print_r($data['slider']);
+		echo '</pre>';
+
+	
 		$data['title'] = "Chỉnh sửa banner";
 		$data['breadcrumb'] = [
 			['label' => 'Dashboard', 'url' => 'dashboard'],
@@ -128,21 +134,19 @@ class sliderController extends CI_Controller
 		$this->load->view("admin-layout/admin-layout", $data);
 	}
 
+
 	public function updateSlider($id)
 	{
 		$this->form_validation->set_rules('title', 'Title', 'trim|required', ['required' => 'Bạn cần điền %s']);
 
 		if ($this->form_validation->run()) {
-			if (empty($_FILES['image']['name'])) {
-				$this->session->set_flashdata('errors', ['Image' => 'Bạn cần chọn hình ảnh']);
-				$this->session->set_flashdata('input', $this->input->post());
-				redirect(base_url('slider/create'));
-				return;
-			}
+			$this->load->model('sliderModel');
+			$slider = $this->sliderModel->selectSliderById($id); // Hàm này bạn cần có sẵn để lấy dữ liệu cũ
+
 			if (!empty($_FILES['image']['name'])) {
 				// Upload Image
 				$ori_filename = $_FILES['image']['name'];
-				$new_name = time() . "" . str_replace(' ', '-', $ori_filename);
+				$new_name = time() . "_" . str_replace(' ', '-', $ori_filename);
 				$config = [
 					'upload_path' => './uploads/sliders',
 					'allowed_types' => 'gif|jpg|png|jpeg',
@@ -151,25 +155,24 @@ class sliderController extends CI_Controller
 				$this->load->library('upload', $config);
 				if (!$this->upload->do_upload('image')) {
 					$data['error'] = $this->upload->display_errors();
+					$data['slider'] = $slider;
 					$data['template'] = "slider/editSlider";
 					$data['title'] = "Chỉnh sửa Banner";
 					$this->load->view("admin-layout/admin-layout", $data);
+					return;
 				} else {
 					$slider_filename = $this->upload->data('file_name');
-					$data = [
-						'title' => $this->input->post('title'),
-						'image' => $slider_filename,
-						'status' => $this->input->post('status'),
-					];
 				}
 			} else {
-				$data = [
-					'title' => $this->input->post('title'),
-					'status' => $this->input->post('status'),
-				];
+				$slider_filename = $slider->image; 
 			}
 
-			$this->load->model('sliderModel');
+			$data = [
+				'title' => $this->input->post('title'),
+				'status' => $this->input->post('status'),
+				'image' => $slider_filename,
+			];
+
 			$this->sliderModel->updateSlider($id, $data);
 			$this->session->set_flashdata('success', 'Đã chỉnh sửa Slider thành công');
 			redirect(base_url('slider/list'));
@@ -177,6 +180,10 @@ class sliderController extends CI_Controller
 			$this->editSlider($id);
 		}
 	}
+
+
+
+
 
 
 	public function deleteSlider($id)

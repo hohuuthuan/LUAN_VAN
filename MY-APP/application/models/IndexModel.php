@@ -128,41 +128,7 @@ class indexModel extends CI_Model
     }
 
 
-    // public function getProductPagination($limit, $start, $keyword = null, $status = null)
-    // {
-    //     $this->db->select('category.Name as tendanhmuc, 
-    //                    product.*, 
-    //                    brand.Name as tenthuonghieu, 
-    //                    COALESCE(SUM(batches.remaining_quantity), 0) as total_remaining')
-    //         ->from('category')
-    //         ->join('product', 'product.CategoryID = category.CategoryID')
-    //         ->join('brand', 'brand.BrandID = product.BrandID')
-    //         ->join('batches', 'batches.ProductID = product.ProductID', 'left')
-    //         ->group_by('product.ProductID')
-    //         ->order_by('total_remaining', 'DESC')
-    //         ->limit($limit, $start);
-
-    //     if ($keyword) {
-    //         $this->db->group_start()
-    //             ->like('product.Name', $keyword)
-    //             ->or_like('product.Product_Code', $keyword)
-    //             ->group_end();
-    //     }
-
-    //     if ($status !== null && $status !== '') {
-    //         $this->db->where('product.Status', $status);
-    //     }
-
-    //     $query = $this->db->get();
-    //     $products = $query->result();
-
-    //     // Lấy chi tiết số lượng tồn kho theo từng lô
-    //     foreach ($products as $product) {
-    //         $product->batches = $this->get_batches_by_product($product->ProductID);
-    //     }
-
-    //     return $products;
-    // }
+   
 
 
     public function getProductPagination($limit, $start, $keyword = null, $status = null, $sort_stock = null)
@@ -786,16 +752,6 @@ class indexModel extends CI_Model
     }
 
 
-    // Comment
-    // public function getAllComment()
-    // {
-    //     $this->db->select('comment.*, product.Name AS product_name');
-    //     $this->db->from('comment');
-    //     $this->db->join('product', 'comment.ProductID_comment = product.ProductID');
-    //     $this->db->where('product.Status', 1);
-    //     $query = $this->db->get();
-    //     return $query->result();
-    // }
 
     public function getAllComment()
     {

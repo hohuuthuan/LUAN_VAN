@@ -264,21 +264,28 @@ class customerController extends CI_Controller
 	}
 
 
-	public function bulkUpdateCustomer(){
+	public function bulkUpdateCustomer()
+	{
 		$customer_ids = $this->input->post('customer_ids');
 		$new_status = (int) $this->input->post('new_status');
 
+		if (!isset($new_status) || $new_status < 0) {
+			$this->session->set_flashdata('error', 'Bạn cần chọn trạng thái');
+			redirect(base_url('manage-customer/list'));
+			return;
+		}elseif (empty($customer_ids) || !is_array($customer_ids)) {
+			$this->session->set_flashdata('error', 'Cần chọn ít nhất một tài khoản');
+			redirect(base_url('manage-customer/list'));
+			return;
+		}
+		
+
 		$this->load->model('customerModel');
 		$this->customerModel->bulkupdateCustomer($customer_ids, $new_status);
-
+		$this->session->set_flashdata('success', 'Cập nhật trạng thái thành công');
+		redirect(base_url('manage-customer/list'));
 	}
 
-	// public function deleteCustomer($UserID)
-	// {
-	// 	$this->load->model('customerModel');
-	// 	$this->customerModel->deleteCustomer($UserID);
-	// 	$this->session->set_flashdata('success', 'Đã xoá người dùng thành công');
-	// 	redirect(base_url('category/list'));
-	// }
+
 
 }

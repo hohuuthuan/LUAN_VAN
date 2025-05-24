@@ -2,7 +2,7 @@
 
     <div class="mb-2 update-multi-order-select mb20 mt20 float-right">
         <select name="new_status" class="form-control d-inline-block w-auto setupSelect2" required>
-            <option>-- Cập nhật trạng thái --</option>
+            <option value="-1">-- Cập nhật trạng thái --</option>
             <option value="1">Kích hoạt</option>
             <option value="0">Không kích hoạt</option>
         </select>

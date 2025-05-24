@@ -46,19 +46,6 @@ class categoryModel extends CI_Model
     }
 
 
-    // public function bulkupdateCategory($category_ids, $new_status)
-    // {
-    //     foreach ($category_ids as $category_id) {
-
-    //         $data = [
-    //             'Status' => $new_status,
-    //         ];
-    //         $result = $this->db->update('category', $data, ['CategoryID' => $category_id]);
-    //     }
-    //     $this->session->set_flashdata('success', 'Cập nhật thành công');
-    //     redirect(base_url('category/list'));
-    // }
-
 
     public function bulkupdateCategory($category_ids, $new_status)
     {

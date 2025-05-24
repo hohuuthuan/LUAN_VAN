@@ -83,23 +83,6 @@ class reviewModel extends CI_Model
         return $this->db->get()->result();
     }
 
-    
-
-    // public function countReviewByProduct($product_id)
-    // {
-    //     $this->db->where('ProductID', $product_id);
-    //     return $this->db->count_all_results('reviews');
-    // }
-
-    // public function getReviewByProduct($product_id, $limit = 5, $offset = 0)
-    // {
-    //     $this->db->select('id, comment, rating, reply, created_at, is_active');
-    //     $this->db->from('reviews');
-    //     $this->db->where('ProductID', $product_id);
-    //     $this->db->order_by('created_at', 'DESC');
-    //     $this->db->limit($limit, $offset);
-    //     return $this->db->get()->result();
-    // }
 
 
     public function countReviewByProduct($product_id, $is_active = null, $rating = null)

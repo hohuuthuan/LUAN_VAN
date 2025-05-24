@@ -198,14 +198,14 @@ class supplierController extends CI_Controller
 		$supplier_ids = $this->input->post('supplier_ids');
 		$new_status = (int) $this->input->post('new_status');
 
-		if (empty($supplier_ids) || !is_array($supplier_ids)) {
-			$this->session->set_flashdata('error', 'Cần chọn ít nhất một nhà cung cấp');
+
+
+		if (!isset($new_status) || $new_status < 0) {
+			$this->session->set_flashdata('error', 'Bạn cần chọn trạng thái');
 			redirect(base_url('supplier/list'));
 			return;
-		}
-
-		if (empty($new_status)) {
-			$this->session->set_flashdata('error', 'Cần chọn trạng thái');
+		}elseif (empty($supplier_ids) || !is_array($supplier_ids)) {
+			$this->session->set_flashdata('error', 'Cần chọn ít nhất một nhà cung cấp');
 			redirect(base_url('supplier/list'));
 			return;
 		}

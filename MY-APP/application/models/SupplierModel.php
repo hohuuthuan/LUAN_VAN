@@ -6,28 +6,6 @@ class supplierModel extends CI_Model
         return $this->db->insert('suppliers', $data);
     }
 
-    
-
-    // public function selectBrand($keyword = null, $status = null, $limit = 20)
-    // {
-    //     if (!empty($keyword)) {
-    //         $this->db->like('Name', $keyword);
-    //     }
-
-    //     if ($status !== null && $status !== '') {
-    //         $this->db->where('Status', (int)$status);
-    //     }
-
-    //     $this->db->order_by('Status', 'DESC');
-    //     $this->db->order_by('Name', 'ASC');
-
-    //     // Giới hạn số bản ghi hiển thị
-    //     $this->db->limit((int)$limit);
-
-    //     $query = $this->db->get('brand');
-    //     return $query->result();
-    // }
-
 
     public function countSupplier($keyword = null, $status = null)
     {

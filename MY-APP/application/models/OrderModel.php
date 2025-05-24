@@ -19,44 +19,6 @@ class orderModel extends CI_Model
         return $order_detail_id = $this->db->insert_id();
     }
 
-    // public function get_qty_product_insert_to_order_batches($product_id, $quantity)
-    // {
-
-    //     $sql = "
-    //         WITH BatchPriority AS (
-    //             SELECT 
-    //                 Batch_ID, 
-    //                 ProductID, 
-    //                 Expiry_date, 
-    //                 remaining_quantity,
-    //                 ROW_NUMBER() OVER (ORDER BY Expiry_date ASC) AS RowNum
-    //             FROM batches
-    //             WHERE ProductID = ? AND remaining_quantity > 0
-    //         ),
-    //         SelectedBatches AS (
-    //             SELECT 
-    //                 Batch_ID, 
-    //                 ProductID, 
-    //                 Expiry_date, 
-    //                 remaining_quantity,
-    //                 RowNum,
-    //                 SUM(remaining_quantity) OVER (ORDER BY RowNum) AS AccumulatedQuantity
-    //             FROM BatchPriority
-    //         )
-    //         SELECT 
-    //             Batch_ID, 
-    //             CASE 
-    //                 WHEN AccumulatedQuantity <= ? THEN remaining_quantity
-    //                 ELSE ? - (AccumulatedQuantity - remaining_quantity)
-    //             END AS QuantityToTake
-    //         FROM SelectedBatches
-    //         WHERE AccumulatedQuantity - remaining_quantity < ?
-    //     ";
-
-    //     $query = $this->db->query($sql, [$product_id, $quantity, $quantity, $quantity]);
-    //     return $query->result_array();
-    // }
-
 
     public function getOrderStatus($order_code)
     {
@@ -146,10 +108,30 @@ class orderModel extends CI_Model
         $invalid_orders = [];
         $missing_batch_data = [];
 
+
+        if ($value < 0) {
+            return [
+                'success' => false,
+                'message' => 'Bạn cần chọn trạng thái cho đơn hàng'
+            ];
+        }
+
+        $invalid_orders = [];
+        $existing_status_4 = [];
+        $cannot_cancel_orders = [];
+
         foreach ($order_codes as $order_code) {
             $current_status = $this->getOrderStatus($order_code);
             if ($current_status > $value) {
                 $invalid_orders[] = $order_code;
+            }
+
+            if ($current_status == 4 && $value == 4) {
+                $existing_status_4[] = $order_code;
+            }
+
+            if ($current_status == 4 && $value == 5) {
+                $cannot_cancel_orders[] = $order_code;
             }
         }
 
@@ -159,6 +141,22 @@ class orderModel extends CI_Model
                 'message' => 'Không thể cập nhật trạng thái cho các đơn hàng đã ở trạng thái cao hơn: ' . implode(', ', $invalid_orders),
             ];
         }
+
+        if (!empty($existing_status_4)) {
+            return [
+                'success' => false,
+                'message' => 'Không thể cập nhật đơn hàng vì đơn hàng đã ở trạng thái đã hoàn tất: ' . implode(', ', $existing_status_4),
+            ];
+        }
+
+        if (!empty($cannot_cancel_orders)) {
+            return [
+                'success' => false,
+                'message' => 'Không thể hủy đơn hàng vì đơn hàng đã ở trạng thái đã hoàn tất: ' . implode(', ', $cannot_cancel_orders),
+            ];
+        }
+
+
 
         $timenow = Carbon\Carbon::now('Asia/Ho_Chi_Minh')->toDateTimeString();
 
@@ -177,9 +175,7 @@ class orderModel extends CI_Model
                     $quantity = $order_detail->qty;
                     $order_detail_id = $order_detail->order_detail_id;
 
-
                     $batch_data = $this->get_qty_product_in_batches($product_id, $quantity);
-
 
                     // echo '<pre>';
                     // print_r($batch_data);
@@ -238,54 +234,6 @@ class orderModel extends CI_Model
 
 
 
-
-
-    // public function selectOrder($limit, $start, $filter = [])
-    // {
-    //     $this->db->select('orders.*, shipping.*')
-    //         ->from('orders')
-    //         ->join('shipping', 'orders.ShippingID = shipping.id')
-    //         ->order_by('(CASE WHEN orders.Order_Status = -1 THEN 0 ELSE 1 END)', 'ASC')
-    //         ->order_by('orders.Order_Status', 'ASC')
-    //         ->order_by('orders.Date_Order', 'DESC');
-
-    //     if (!empty($filter['keyword'])) {
-    //         $this->db->group_start()
-    //             ->like('orders.Order_code', $filter['keyword'])
-    //             ->or_like('shipping.Name', $filter['keyword'])
-    //             ->or_like('shipping.Phone', $filter['keyword'])
-    //             ->or_like('shipping.Email', $filter['keyword'])
-    //             ->or_like('shipping.Address', $filter['keyword'])
-    //             ->group_end();
-    //     }
-
-    //     if ($filter['status'] !== '' && $filter['status'] !== null) {
-    //         $this->db->where('orders.Order_Status', $filter['status']);
-    //     }
-
-    //     if (!empty($filter['checkout_method'])) {
-    //         $this->db->where('shipping.checkout_method', $filter['checkout_method']);
-    //     }
-    //     if (!empty($filter['date_from'])) {
-    //         $this->db->where('orders.Date_Order >=', $filter['date_from'] . ' 00:00:00');
-    //     }
-
-    //     if (!empty($filter['date_to'])) {
-    //         $this->db->where('orders.Date_Order <=', $filter['date_to'] . ' 23:59:59');
-    //     }
-
-    //     if (!empty($filter['sort_order']) && in_array($filter['sort_order'], ['asc', 'desc'])) {
-    //         $this->db->order_by('orders.Date_Order', $filter['sort_order']);
-    //     } else {
-    //         $this->db->order_by('orders.Date_Order', 'desc');
-    //     }
-
-
-
-    //     $this->db->limit($limit, $start);
-
-    //     return $this->db->get()->result();
-    // }
 
     public function selectOrder($limit, $start, $filter = [])
     {
@@ -353,10 +301,6 @@ class orderModel extends CI_Model
 
 
 
-
-
-
-
     public function countOrder($filter = [])
     {
         $this->db->from('orders')
@@ -390,21 +334,6 @@ class orderModel extends CI_Model
         return $this->db->count_all_results();
     }
 
-
-
-
-
-    // public function getOrderByUserId($user_id)
-    // {
-    //     $query = $this->db->select('orders.*, order_detail.*, shipping.*')
-    //         ->from('orders')
-    //         ->join('order_detail', 'orders.Order_Code = order_detail.Order_Code', '')
-    //         ->join('shipping', 'orders.ShippingID = shipping.id')
-    //         ->where('shipping.user_id', $user_id)
-    //         ->order_by('orders.Date_Order', 'DESC')
-    //         ->get();
-    //     return $query->result();
-    // }
 
 
     public function getOrderByUserId($user_id)
@@ -613,16 +542,14 @@ class orderModel extends CI_Model
     }
 
 
-
-
     public function getDiscountSummaryByType()
     {
         $sql = "
-    SELECT 
+    SELECT  
         Discount_type,
         COUNT(*) as total,
         SUM(CASE WHEN Status = 1 AND End_date >= CURDATE() THEN 1 ELSE 0 END) as active,
-        SUM(CASE WHEN Status = 1 AND End_date < CURDATE() THEN 1 ELSE 0 END) as expired
+        SUM(CASE WHEN Status = 0 OR End_date < CURDATE() THEN 1 ELSE 0 END) as expired
     FROM discount
     GROUP BY Discount_type
     ";

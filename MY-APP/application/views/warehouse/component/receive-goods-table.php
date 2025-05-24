@@ -1,6 +1,6 @@
 <form action="<?= base_url('receive-goods/bulkPrint') ?>" method="post" target="_blank">
     <button type="submit" class="btn btn-success float-right mt20">
-        In phiếu nhập hàng loạt
+        In phiếu nhập
     </button>
 
     <table class="table table-striped table-bordered mt20 mb20">

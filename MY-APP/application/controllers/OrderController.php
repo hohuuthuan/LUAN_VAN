@@ -158,40 +158,6 @@ class orderController extends CI_Controller
 
 
 
-	// public function deleteOrder($order_code)
-	// {
-	// 	$this->load->model('orderModel');
-	// 	// Lấy danh sách order details
-	// 	$order_detail = $this->orderModel->selectOrderDetails($order_code);
-	// 	if (empty($order_detail)) {
-	// 		$this->session->set_flashdata('error', 'Đơn hàng không tồn tại');
-	// 		redirect(base_url('order_admin/listOrder'));
-	// 		return;
-	// 	}
-
-	// 	if ($order_detail->checkout_method == 'COD') {
-	// 		$this->db->trans_start();
-	// 		foreach ($order_detail as $order_detail) {
-	// 			$this->orderModel->deleteOrderBatches($order_detail->order_detail_id);
-	// 		}
-	// 		$this->orderModel->deleteOrderDetails($order_code);
-	// 		$ShippingID = $this->orderModel->deleteOrder($order_code);
-	// 		if ($ShippingID !== false) {
-	// 			$this->orderModel->deleteShipping($ShippingID);
-	// 		}
-	// 		$this->db->trans_complete();
-	// 	} elseif ($order_detail->checkout_method == 'VNPAY') {
-	// 		$this->session->set_flashdata('error', 'Không thể xoá đơn hàng với phuong thức thanh toán VNPAY');
-	// 		redirect(base_url('order_admin/listOrder'));
-	// 	}
-
-	// 	if ($this->db->trans_status() === FALSE) {
-	// 		$this->session->set_flashdata('error', 'Xóa đơn hàng thất bại');
-	// 	} else {
-	// 		$this->session->set_flashdata('success', 'Xóa đơn hàng thành công');
-	// 	}
-	// 	redirect(base_url('order_admin/listOrder'));
-	// }
 
 	public function update_order_status_old()
 	{
@@ -238,6 +204,10 @@ class orderController extends CI_Controller
 	public function update_order_status()
 	{
 		$value = (int)$this->input->post('value');
+
+		echo $value; die();
+
+
 		$order_code = $this->input->post('Order_Code');
 		if (!is_array($order_code)) {
 			$order_code = [$order_code];
@@ -257,7 +227,7 @@ class orderController extends CI_Controller
 		$this->load->model('orderModel');
 
 		$order_ids = $this->input->post('order_ids');
-		$new_status = (int) $this->input->post('new_status');
+		$new_status = (int)$this->input->post('new_status');		
 
 		if (empty($order_ids)) {
 			$this->session->set_flashdata('error', 'Vui lòng chọn ít nhất 1 đơn hàng để cập nhật.');

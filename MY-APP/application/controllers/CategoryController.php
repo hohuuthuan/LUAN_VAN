@@ -218,14 +218,6 @@ class categoryController extends CI_Controller
 		}
 	}
 
-	// public function bulkUpdateCategory(){
-	// 	$category_ids = $this->input->post('category_ids');
-	// 	$new_status = (int) $this->input->post('new_status');
-
-	// 	$this->load->model('categoryModel');
-	// 	$this->categoryModel->bulkupdateCategory($category_ids, $new_status);
-
-	// }
 
 
 
@@ -234,17 +226,19 @@ class categoryController extends CI_Controller
 		$category_ids = $this->input->post('category_ids');
 		$new_status = (int) $this->input->post('new_status');
 
-		if (empty($category_ids) || !is_array($category_ids)) {
-			$this->session->set_flashdata('error', 'Cần chọn ít nhất một danh mục');
+		// echo $new_status; die(); 		
+
+
+		if (!isset($new_status) || $new_status < 0) {
+			$this->session->set_flashdata('error', 'Bạn cần chọn trạng thái');
+			redirect(base_url('category/list'));
+			return;
+		}elseif (empty($category_ids) || !is_array($category_ids)) {
+			$this->session->set_flashdata('error', 'Cần chọn ít nhất một nhà cung cấp');
 			redirect(base_url('category/list'));
 			return;
 		}
 
-		if (!isset($new_status)) {
-			$this->session->set_flashdata('error', 'Cần chọn trạng thái');
-			redirect(base_url('category/list'));
-			return;
-		}
 
 		$this->load->model('categoryModel');
 		$this->categoryModel->bulkupdateCategory($category_ids, $new_status);
@@ -252,26 +246,5 @@ class categoryController extends CI_Controller
 		redirect(base_url('category/list'));
 	}
 
-	// public function deleteCategory($CategoryID)
-	// {
-	// 	$this->load->model('categoryModel');
-	// 	$this->load->model('productModel');
-
-	// 	// Kiểm tra xem danh mục có sản phẩm liên kết hay không
-	// 	$categoryUsedInProducts = $this->categoryModel->checkCategoryInProducts($CategoryID);
-
-	// 	if ($categoryUsedInProducts) {
-	// 		// Nếu có sản phẩm sử dụng danh mục này, không cho phép xóa
-	// 		$this->session->set_flashdata('error', 'Không thể xóa danh mục vì có sản phẩm đang sử dụng.');
-	// 	} else {
-	// 		// Nếu không có sản phẩm nào liên kết, thực hiện xóa
-	// 		if ($this->categoryModel->deleteCategory($CategoryID)) {
-	// 			$this->session->set_flashdata('success', 'Đã xóa danh mục thành công');
-	// 		} else {
-	// 			$this->session->set_flashdata('error', 'Xóa danh mục thất bại');
-	// 		}
-	// 	}
-
-	// 	redirect(base_url('category/list'));
-	// }
+	
 }

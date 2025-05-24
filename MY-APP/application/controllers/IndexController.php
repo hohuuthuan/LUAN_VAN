@@ -89,6 +89,8 @@ class IndexController extends CI_Controller
 	public function index()
 	{
 
+
+		
 		$this->load->helper('pagination');
 		$this->load->library('pagination');
 		$this->load->model('IndexModel');
@@ -798,91 +800,6 @@ class IndexController extends CI_Controller
 
 
 
-	// public function loginCustomer()
-	// {
-	// 	$max_attempts = 5;
-	// 	$lockout_time = 0;
-
-	// 	// Lấy thông tin số lần thử đăng nhập và thời gian lần thử cuối cùng
-	// 	$login_attempts = $this->session->userdata('login_attempts') ?? 0;
-	// 	$last_attempt_time = $this->session->userdata('last_attempt_time') ?? 0;
-
-	// 	// Kiểm tra xem người dùng có bị khóa không
-	// 	if ($login_attempts >= $max_attempts) {
-	// 		$time_since_last_attempt = time() - $last_attempt_time;
-	// 		if ($time_since_last_attempt < $lockout_time) {
-	// 			$remaining_time = $lockout_time - $time_since_last_attempt;
-	// 			$this->session->set_flashdata(
-	// 				'error',
-	// 				'Bạn đã thử đăng nhập quá nhiều lần. Vui lòng thử lại sau ' . ceil($remaining_time / 60) . ' phút.'
-	// 			);
-	// 			redirect(base_url('/dang-nhap'));
-	// 			return;
-	// 		} else {
-	// 			// Xóa dữ liệu sau khi hết thời gian khóa
-	// 			$this->session->unset_userdata(['login_attempts', 'last_attempt_time']);
-	// 		}
-	// 	}
-
-	// 	// Ràng buộc form validation
-	// 	$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
-	// 		'required' => 'Bạn cần cung cấp email.',
-	// 		'valid_email' => 'Email không hợp lệ.',
-	// 	]);
-	// 	$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]', [
-	// 		'required' => 'Bạn cần cung cấp mật khẩu.',
-	// 		'min_length' => 'Mật khẩu phải có ít nhất 6 ký tự.',
-	// 	]);
-
-	// 	if ($this->form_validation->run()) {
-	// 		$email = $this->input->post('email');
-	// 		$password = $this->input->post('password');
-
-	// 		$this->load->model('loginModel');
-	// 		$result = $this->loginModel->checkLoginCustomer($email);
-	// 		echo '<pre>';
-	// 		print_r($result[0]->Status);
-	// 		echo '</pre>'; die();
-
-	// 		// Kiểm tra kết quả từ cơ sở dữ liệu và xác minh mật khẩu
-	// 		if (!empty($result) && password_verify($password, $result[0]->Password) && $result[0]->Status == 1) {
-
-	// 			$this->session->unset_userdata(['login_attempts', 'last_attempt_time']);
-
-	// 			$session_array = [
-	// 				'id' => $result[0]->UserID,
-	// 				'role_id' => $result[0]->Role_ID,
-	// 				'username' => $result[0]->Name,
-	// 				'email' => $result[0]->Email,
-	// 				'phone' => $result[0]->Phone,
-	// 			];
-
-	// 			// Chuyển hướng dựa trên quyền
-	// 			if ($result[0]->Role_ID == 1) {
-	// 				$this->session->set_userdata('logged_in_admin', $session_array);
-	// 				$this->session->set_flashdata('success', 'Đăng nhập thành công');
-	// 				redirect(base_url('/'));
-	// 			} else {
-	// 				$this->session->set_userdata('logged_in_customer', $session_array);
-	// 				$this->session->set_flashdata('success', 'Đăng nhập thành công');
-	// 				redirect(base_url('/'));
-	// 			}
-	// 		} else {
-	// 			// Tăng số lần thử đăng nhập và cập nhật thời gian
-	// 			$login_attempts++;
-	// 			$this->session->set_userdata('login_attempts', $login_attempts);
-	// 			$this->session->set_userdata('last_attempt_time', time());
-
-	// 			$this->session->set_flashdata('error', 'Email hoặc mật khẩu không chính xác.');
-	// 			redirect(base_url('/dang-nhap'));
-	// 		}
-	// 	} else {
-	// 		// Hiển thị lỗi form validation nếu có
-	// 		$validation_errors = validation_errors('<div>', '</div>');
-	// 		$this->session->set_flashdata('error', $validation_errors);
-	// 		redirect(base_url('/dang-nhap'));
-	// 	}
-	// }
 
 
 	public function loginCustomer()
@@ -1382,17 +1299,7 @@ class IndexController extends CI_Controller
 
 			$this->load->model('loginModel');
 			$result = $this->loginModel->checkLoginCustomer($email);
-			// echo '<pre>';
-			// print_r($result);
-			// echo '</pre>';
-
-			// $hashedPassword = $result[0]->Password;
-
-			// if (password_verify($password, $hashedPassword)) {
-			// 	echo "✅ Mật khẩu khớp!";
-			// } else {
-			// 	echo "❌ Mật khẩu không khớp!";
-			// }
+		
 			// Kiểm tra kết quả từ cơ sở dữ liệu và xác minh mật khẩu
 			if (!empty($result) && password_verify($password, $result[0]->Password)) {
 				$this->session->unset_userdata(['login_attempts', 'last_attempt_time']);

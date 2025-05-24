@@ -47,25 +47,6 @@ class reviewController extends CI_Controller
         redirect(base_url('/'));
     }
 
-    // public function index()
-    // {
-    //     $this->config->config['pageTitle'] = 'List of products';
-
-
-    //     $this->load->model('reviewModel');
-
-    //     $data['reviews'] = $this->reviewModel->getProductsWithReviews();
-
-
-
-    //     $data['title']      = "Danh sách sản phẩm được đánh giá";
-    // 	$data['breadcrumb'] = [
-    // 		['label' => 'Danh sách sản phẩm được đánh giá', 'url' => 'review-list'],
-    // 		['label' => 'Danh sách sản phẩm được đánh giá']
-    // 	];
-    //     $data['template'] = "review/index";
-    //     $this->load->view("admin-layout/admin-layout", $data);
-    // }
 
 
 
@@ -114,84 +95,6 @@ class reviewController extends CI_Controller
     }
 
 
-    // public function reviewProduct($productId)
-    // {
-    //     $this->load->model('reviewModel');
-    //     $this->load->model('productModel');
-
-
-    //     $product = $this->productModel->selectProductById($productId);
-    //     if (!$product) {
-    //         show_404();
-    //     }
-
-    //     $reviews = $this->reviewModel->getReviewsByProductId($productId);
-
-    //     $data['product'] = $product;
-    //     $data['reviews'] = $reviews;
-
-    //     echo '<pre>';
-    //     print_r($data['product']);
-    //     echo '</pre>';
-    //     echo '<pre>';
-    //     print_r($data['reviews']);
-    //     echo '</pre>';
-
-    //     $data['title'] = 'Chi tiết đánh giá sản phẩm';
-
-    //     $data['breadcrumb'] = [
-    //         ['label' => 'Dashboard', 'url' => 'dashboard'],
-    //         ['label' => 'Danh sách đánh giá', 'url' => 'review-list'],
-    //         ['label' => 'Chi tiết đánh giá']
-    //     ];
-
-    //     $data['template'] = 'review/review_of_product';
-
-    //     $this->load->view('admin-layout/admin-layout', $data);
-    // }
-
-
-
-    // public function reviewProduct($product_id, $page = 1)
-    // {
-    //     $this->load->model('reviewModel');
-    //     $this->load->model('productModel');
-    //     $this->load->helper('pagination');
-
-    //     $perpage = (int) $this->input->get('perpage');
-    //     $perpage = $perpage > 0 ? $perpage : 1;
-
-    //     $total = $this->reviewModel->countReviewByProduct($product_id);
-
-    //     $page = (int) $page;
-    //     $page = $page > 0 ? $page : 1;
-    //     $max_page = ceil($total / $perpage);
-
-    //     if ($page > $max_page && $total > 0) {
-    //         $query = http_build_query($this->input->get());
-    //         redirect(base_url("review-list/detail/$product_id") . ($query ? '?' . $query : ''));
-    //     }
-
-    //     $start = ($page - 1) * $perpage;
-
-    //     $data['product'] = $this->productModel->selectProductById($product_id);
-    //     $data['reviews'] = $this->reviewModel->getReviewByProduct($product_id, $perpage, $start);
-
-    //     $data['links'] = init_pagination(base_url("review-list/detail/$product_id"), $total, $perpage, 4);
-
-    //     $data['perpage'] = $perpage;
-    //     $data['start'] = $start;
-    //     $data['title'] = "Chi tiết đánh giá sản phẩm";
-    //     $data['breadcrumb'] = [
-    //         ['label' => 'Dashboard', 'url' => 'dashboard'],
-    //         ['label' => 'Đánh giá sản phẩm', 'url' => 'review-list'],
-    //         ['label' => 'Chi tiết đánh giá']
-    //     ];
-
-    //     $data['template'] = 'review/review_of_product';
-
-    //     $this->load->view('admin-layout/admin-layout', $data);
-    // }
 
 
     public function reviewProduct($product_id, $page = 1)

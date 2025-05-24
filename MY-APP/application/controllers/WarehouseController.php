@@ -37,63 +37,6 @@ class warehouseController extends CI_Controller
 			redirect(base_url('dang-nhap'));
 		}
 	}
-
-	// public function index()
-	// {
-	// 	// $this->checkLogin();
-	// 	$this->config->config['pageTitle'] = 'List Products';
-	// 	$this->load->model('indexModel');
-
-	// 	$total_products = $this->indexModel->countAllProduct();
-
-	// 	$this->load->library('pagination');
-
-	// 	$config = array();
-	// 	$config["base_url"] = base_url() . 'product/list';
-	// 	$config['total_rows'] = $total_products;
-	// 	$config["per_page"] = 10;
-	// 	$config["uri_segment"] = 3;
-	// 	$config['use_page_numbers'] = TRUE;
-	// 	$config['full_tag_open'] = '<ul class="pagination">';
-	// 	$config['full_tag_close'] = '</ul>';
-	// 	$config['first_link'] = 'First';
-	// 	$config['first_tag_open'] = '<li>';
-	// 	$config['first_tag_close'] = '</li>';
-	// 	$config['last_link'] = 'Last';
-	// 	$config['last_tag_open'] = '<li>';
-	// 	$config['last_tag_close'] = '</li>';
-	// 	$config['cur_tag_open'] = '<li class="active"><a>';
-	// 	$config['cur_tag_close'] = '</a></li>';
-	// 	$config['num_tag_open'] = '<li>';
-	// 	$config['num_tag_close'] = '</li>';
-	// 	$config['next_tag_open'] = '<li>';
-	// 	$config['next_tag_close'] = '</li>';
-	// 	$config['prev_tag_open'] = '<li>';
-	// 	$config['prev_tag_close'] = '</li>';
-
-	// 	// Khởi tạo phân trang
-	// 	$this->pagination->initialize($config);
-
-	// 	// Xác định trang hiện tại
-	// 	$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
-	// 	$start = ($page - 1) * $config['per_page'];
-
-	// 	// Lấy dữ liệu sản phẩm theo phân trang
-	// 	$data['products'] = $this->indexModel->getIndexPagination($config['per_page'], $start);
-	// 	$data['links'] = $this->pagination->create_links();
-	// 	// echo '<pre>';
-	// 	// print_r($data);
-	// 	// echo '</pre>';
-
-
-	// 	$data['breadcrumb'] = [
-	// 		['label' => 'Dashboard', 'url' => 'dashboard'],
-	// 		['label' => 'Danh sách sản phẩm trong kho']
-	// 	];
-	// 	$data['template'] = "warehouse/index";
-	// 	$this->load->view("admin-layout/admin-layout", $data);
-	// }
-
 	public function index($page = 1)
 	{
 		$this->config->config['pageTitle'] = 'List Products';
@@ -356,25 +299,7 @@ class warehouseController extends CI_Controller
 	}
 
 
-	// public function receipt_goods_history()
-	// {
-	// 	$this->load->model('warehouseModel');
 
-	// 	$data['receive_history'] = $this->warehouseModel->get_warehouse_receipts();
-
-	// 	// echo "<pre>";
-	// 	// print_r($data['receive_history']);
-	// 	// echo "</pre>";
-
-	// 	$this->config->config['pageTitle'] = 'Lịch sử nhập hàng';
-	// 	$data['title'] = "Lịch sử nhập hàng";
-	// 	$data['breadcrumb'] = [
-	// 		['label' => 'Dashboard', 'url' => 'dashboard'],
-	// 		['label' => 'Lịch sử nhập hàng']
-	// 	];
-	// 	$data['template'] = "warehouse/receive-goods-list";
-	// 	$this->load->view("admin-layout/admin-layout", $data);
-	// }
 
 	public function receipt_detail($id)
 	{

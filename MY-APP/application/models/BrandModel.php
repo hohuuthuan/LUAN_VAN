@@ -53,20 +53,6 @@ class brandModel extends CI_Model
 
 
 
-    // public function bulkupdateBrand($brand_ids, $new_status)
-    // {
-    //     foreach ($brand_ids as $brand_id) {
-    //         $data = [
-    //             'Status' => $new_status,
-    //         ];
-    //         $this->db->update('brand', $data, ['BrandID' => $brand_id]);
-    //     }
-    //     $this->session->set_flashdata('success', 'Cập nhật thành công');
-    //     redirect(base_url('brand/list'));
-    // }
-
-
-
     public function bulkupdateBrand($brand_ids, $new_status)
     {
         $this->db->trans_begin();
@@ -93,9 +79,4 @@ class brandModel extends CI_Model
         return $this->db->where('brand_id', $brand_id)->count_all_results('products') > 0;
     }
 
-
-    // public function deleteBrand($BrandID)
-    // {
-    //     return $this->db->delete('brand', ['BrandID' => $BrandID]);
-    // }
 }

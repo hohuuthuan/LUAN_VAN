@@ -27,34 +27,7 @@ class customerModel extends CI_Model
     }
 
 
-    // public function getCustomers($limit, $offset, $filter = [])
-    // {
-    //     $this->db->select('users.*, role.Role_name')
-    //         ->from('users')
-    //         ->join('role', 'users.Role_ID = role.Role_ID')
-    //         ->where('users.Deleted_at IS NULL');
-
-    //     if (isset($filter['status']) && $filter['status'] !== '') {
-    //         $this->db->where('users.Status', $filter['status']);
-    //     }
-
-    //     if (isset($filter['role_id']) && $filter['role_id'] !== '') {
-    //         $this->db->where('users.Role_ID', $filter['role_id']);
-    //     }
-
-    //     if (!empty($filter['keyword'])) {
-    //         $this->db->group_start()
-    //             ->like('users.Name', $filter['keyword'])
-    //             ->or_like('users.Email', $filter['keyword'])
-    //             ->or_like('users.Phone', $filter['keyword'])
-    //             ->group_end();
-    //     }
-
-    //     $this->db->order_by('users.UserID', 'DESC');
-    //     $this->db->limit($limit, $offset);
-
-    //     return $this->db->get()->result();
-    // }
+   
 
 
     public function getCustomers($limit, $offset, $filter = [])
@@ -167,18 +140,6 @@ class customerModel extends CI_Model
         return $this->db->update('users', $data, ['UserID' => $UserID]);
     }
 
-
-
-    // public function bulkupdateCustomer($customer_ids, $new_status){
-    //     foreach ($customer_ids as $customer_id) {
-    //         $data = [
-    //             'Status' => $new_status,
-    //         ];
-    //         $this->db->update('users', $data, ['UserID' => $customer_id]);
-    //     }
-    //     $this->session->set_flashdata('success', 'Cập nhật thành công');
-    //     redirect(base_url('manage-customer/list'));
-    // }
 
 
     public function bulkupdateCustomer($customer_ids, $new_status){

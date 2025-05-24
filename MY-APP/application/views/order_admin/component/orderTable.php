@@ -1,7 +1,7 @@
 <form method="post" action="<?= base_url('order_admin/bulkUpdate') ?>" class="">
     <div class="mb-2 update-multi-order-select mb20">
         <select name="new_status" class="form-control d-inline-block w-auto setupSelect2" required>
-            <option>-- Cập nhật trạng thái --</option>
+            <option value="-1">-- Cập nhật trạng thái --</option>
             <option value="1">Đơn hàng đanh được xử lý</option>
             <option value="2">Đang chuẩn bị hàng</option>
             <option value="3">Đã giao cho đơn vị vận chuyển</option>

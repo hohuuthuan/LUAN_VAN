@@ -113,12 +113,9 @@ class dashboardController extends CI_Controller
         $data['todayProfit'] = $this->RevenueModel->getTodayProfit();
         $data['todayNewOrders'] = $this->RevenueModel->getTodayNewOrders();
         $data['todayNewUsers'] = $this->RevenueModel->getTodayNewUsers();
-
-        
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
-
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
 
         // Load view
         $data['template'] = "dashboard/adminHomePage";
@@ -171,8 +168,6 @@ class dashboardController extends CI_Controller
         $data['discountSummary'] = $this->OrderModel->getDiscountSummaryByType();
 
 
-
-
         $data['links'] = init_pagination(base_url('discount-code/list'), $total, $perpage, 3);
 
         $data['status']     = $status;
@@ -192,91 +187,7 @@ class dashboardController extends CI_Controller
 
 
 
-    // public function discount_code_list($page = 1)
-    // {
-    //     $this->config->config['pageTitle'] = 'List Discount';
-    //     $this->load->model('OrderModel');
-    //     $this->load->helper('pagination');
-
-    //     $keyword  = $this->input->get('keyword', true);
-    //     $status = $this->input->get('status', true);
-    //     $status = ($status === '' || $status === null) ? null : (int) $status;
-
-
-    //     $perpage  = (int) $this->input->get('perpage');
-    //     $perpage  = $perpage > 0 ? $perpage : 5;
-
-    //     $total = $this->OrderModel->countDiscountCode($keyword, $status);
-
-    //     $page = (int) $page;
-    //     $page = $page > 0 ? $page : 1;
-    //     $max_page = ceil($total / $perpage);
-
-    //     if ($page > $max_page && $total > 0) {
-    //         $query = http_build_query($this->input->get());
-    //         redirect(base_url('discount-code/list') . ($query ? '?' . $query : ''));
-    //     }
-
-    //     $start = ($page - 1) * $perpage;
-
-    //     $data['DiscountCodes'] = $this->OrderModel->selectDiscountCode($keyword, $status, $perpage, $start);
-    //     $data['discountSummary'] = $this->OrderModel->getDiscountSummaryByType();
-
-
-    //     $data['links'] = init_pagination(base_url('discount-code/list'), $total, $perpage, 3);
-
-    //     $data['status']     = $status;
-    //     $data['keyword']    = $keyword;
-    //     $data['perpage']    = $perpage;
-    //     $data['start']      = $start;
-    //     $data['title']      = "Danh sách mã giảm giá";
-    //     $data['breadcrumb'] = [
-    //         ['label' => 'Dashboard', 'url' => 'dashboard'],
-    //         ['label' => 'Danh sách mã giảm giá']
-    //     ];
-    //     $data['template'] = "discount/index";
-
-    //     $this->load->view("admin-layout/admin-layout", $data);
-    // }
-
-    // public function bulkUpdate()
-    // {
-    //     $discountIDs = $this->input->post('discount_ids');
-    //     $newStatus   = $this->input->post('new_status');
-
-    //     if (!is_array($discountIDs) || !in_array($newStatus, ['0', '1'])) {
-    //         $this->session->set_flashdata('error', 'Dữ liệu không hợp lệ.');
-    //         redirect($_SERVER['HTTP_REFERER']);
-    //     }
-
-    //     $this->db->where_in('DiscountID', $discountIDs);
-    //     $this->db->update('discount', ['Status' => (int)$newStatus]);
-
-    //     $this->session->set_flashdata('success', 'Cập nhật trạng thái thành công.');
-    //     redirect($_SERVER['HTTP_REFERER']);
-    // }
-
-
-
-
-
-
-    // public function createDiscountCode()
-    // {
-    //     $this->config->config['pageTitle'] = 'Create Discount';
-    //     // $this->load->model('OrderModel');
-    //     $data['errors'] = $this->session->flashdata('errors');
-    //     $data['input'] = $this->session->flashdata('input');
-    //     // $data['discount'] = $this->OrderModel->selectDiscount();
-    //     $data['title'] = "Thêm mới mã giảm giá";
-    //     $data['breadcrumb'] = [
-    //         ['label' => 'Dashboard', 'url' => 'dashboard'],
-    //         ['label' => 'Thêm mới mã giảm giá']
-    //     ];
-    //     $data['template'] = "discount/storeDiscountCode";
-    //     $this->load->view("admin-layout/admin-layout", $data);
-    // }
-
+    
 
     public function createDiscountCode()
     {
@@ -522,64 +433,4 @@ class dashboardController extends CI_Controller
         redirect(base_url('discount-code/list'));
     }
 
-
-
-    // public function list_comment()
-    // {
-    //     $this->config->config['pageTitle'] = 'List Comments';
-    //     $this->load->model('IndexModel');
-    //     $data['comments'] = $this->IndexModel->getAllComment();
-    //     // echo '</pre>';
-    //     // print_r($data['comments']);
-    //     // echo '</pre>';
-    //     $data["title"] = "Danh sách bình luận";
-    //     $data['breadcrumb'] = [
-    // 		['label' => 'Dashboard', 'url' => 'dashboard'],
-    // 		['label' => 'Danh sách bình luận']
-    // 	];
-    //     $data["template"] = "comment/index";
-    //     $this->load->view("admin-layout/admin-layout", $data);
-    // }
-
-    // public function deleteComment($cmt_id)
-    // {
-    //     $this->load->model('IndexModel');
-
-    //     $del_comment_details = $this->IndexModel->deleteComment($cmt_id);
-    //     if ($del_comment_details) {
-    //         $this->session->set_flashdata('success', 'Xóa bình luận thành công');
-    //         redirect(base_url('comment'));
-    //     } else {
-    //         $this->session->set_flashdata('error', 'Xóa bình luận thất bại');
-    //         redirect(base_url('comment'));
-    //     }
-    // }
-
-    // public function editComment($cmt_id)
-    // {
-    //     $this->config->config['pageTitle'] = 'Edit Customer';
-    //     $this->load->model('IndexModel');
-    //     $data['comments'] = $this->IndexModel->selectCommentById($cmt_id);
-    //     $data["title"] = "Chỉnh sửa bình luận";
-    //     $data['breadcrumb'] = [
-    // 		['label' => 'Dashboard', 'url' => 'dashboard'],
-    // 		['label' => 'Danh sách bình luận', 'url' => 'comment'],
-    //         ['label' => 'Cập nhật trạng thái bình luận']
-    // 	];
-    //     $data["template"] = "comment/editComment";
-    //     $this->load->view("admin-layout/admin-layout", $data);
-    // }
-
-
-    // public function updateComment($cmt_id)
-    // {
-    //     $data = [
-    //         'comment' => $this->input->post('comment'),
-    //         'status' => $this->input->post('status'),
-    //     ];
-    //     $this->load->model('IndexModel');
-    //     $this->IndexModel->updateComment($cmt_id, $data);
-    //     $this->session->set_flashdata('success', 'Đã chỉnh sửa bình luận thành công');
-    //     redirect(base_url('comment'));
-    // }
 }
